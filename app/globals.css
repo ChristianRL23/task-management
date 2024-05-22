@@ -7,3 +7,15 @@
 html {
   font-size: 62.5%;
 }
+
+.input-container {
+  @apply text-lg border p-4 border-gray rounded-md text-black outline-none  border-opacity-50;
+}
+
+.input {
+  @apply text-lg border p-4 border-gray rounded-md text-black outline-none placeholder:text-gray placeholder:text-opacity-50 border-opacity-50;
+}
+
+.button {
+  @apply rounded-full font-semibold p-4;
+}

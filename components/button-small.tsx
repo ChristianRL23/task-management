@@ -6,7 +6,7 @@ type ButtonSmallProps = {
 
 const ButtonSmall: FC<ButtonSmallProps> = ({ content }) => {
   return (
-    <button className="bg-blue rounded-full text-white font-semibold p-4 text-2xl hover:bg-purple">
+    <button className="button text-2xl bg-blue hover:bg-purple text-white">
       {content}
     </button>
   );

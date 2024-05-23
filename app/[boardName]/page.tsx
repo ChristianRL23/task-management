@@ -3,16 +3,35 @@ import ButtonSmall from '@/components/button-small';
 import Header from '@/components/header';
 import Modal from '@/components/modal';
 import ModalAddNewTask from '@/components/modal-add-new-task';
+import ModalEditTask from '@/components/modal-edit-task';
 import Task from '@/components/task';
 import { ReactNode, useState } from 'react';
 
+type modalIsOpenTrue = {
+  isOpen: true;
+  payload: string;
+};
+
+type modalIsOpenFalse = {
+  isOpen: false;
+};
+
+type modalIsOpenInitialState = modalIsOpenTrue | modalIsOpenFalse;
+
 const BoardPage = () => {
-  const [newTaskModalIsOpen, setNewTaskModalIsOpen] = useState(false);
+  const [modalState, setModalState] = useState<modalIsOpenInitialState>({
+    isOpen: false,
+  });
   let content: ReactNode;
+  let modalContent: ReactNode;
   const empty = false;
 
   function handleCloseModal() {
-    setNewTaskModalIsOpen(false);
+    setModalState({ isOpen: false });
+  }
+
+  function handleOpenModal(modalType: string) {
+    setModalState({ isOpen: true, payload: modalType });
   }
 
   if (empty) {
@@ -37,25 +56,28 @@ const BoardPage = () => {
             </h6>
           </div>
           <div className="grid grid-cols-1 gap-7 tracking-tighter">
-            <Task />
-            <Task />
-            <Task />
+            <Task handleOpenModal={handleOpenModal} />
+            <Task handleOpenModal={handleOpenModal} />
+            <Task handleOpenModal={handleOpenModal} />
           </div>
         </div>
       </section>
     );
   }
 
+  if (modalState.isOpen) {
+    if (modalState.payload === 'ADD-NEW-TASK') {
+      modalContent = <ModalAddNewTask handleCloseModal={handleCloseModal} />;
+    } else if (modalState.payload === 'EDIT-TASK') {
+      modalContent = <ModalEditTask handleCloseModal={handleCloseModal} />;
+    }
+  }
+
   return (
     <main className="bg-sky-blue-light h-screen flex flex-col">
-      <Header
-        boardIsEmpty={empty}
-        setNewTaskModalIsOpen={setNewTaskModalIsOpen}
-      />
+      <Header boardIsEmpty={empty} handleOpenModal={handleOpenModal} />
       {content}
-      {newTaskModalIsOpen && (
-        <ModalAddNewTask handleCloseModal={handleCloseModal} />
-      )}
+      {modalContent}
     </main>
   );
 };

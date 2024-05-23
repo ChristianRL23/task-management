@@ -8,13 +8,13 @@ import { type ReactNode, type FC } from 'react';
 
 type HeaderProps = {
   boardIsEmpty: boolean;
-  setNewTaskModalIsOpen: (lastState: boolean) => void;
+  handleOpenModal: (modalType: string) => void;
 };
 
-const Header: FC<HeaderProps> = ({ boardIsEmpty, setNewTaskModalIsOpen }) => {
+const Header: FC<HeaderProps> = ({ boardIsEmpty, handleOpenModal }) => {
   let addTaskButton: ReactNode;
   const handleAddTask = () => {
-    setNewTaskModalIsOpen(true);
+    handleOpenModal('ADD-NEW-TASK');
   };
 
   if (boardIsEmpty) {
